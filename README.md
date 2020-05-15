@@ -40,11 +40,19 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 - [ ] Explain the difference between `Relational Databases` and `SQL`.
 
+A relational databse is where the data is stored, SQL is Structured Query Language, its used for accesing and manipulating the data.
+
 - [ ] Why do tables need a `primary key`?
+
+oO each cell can be referenced by a uniqe identifies. It's an id that allows for data retrieval
 
 - [ ] What is the name given to a table column that references the primary key on another table.
 
+Foreign Key
+
 - [ ] What do we need in order to have a _many to many_ relationship between two tables.
+
+We need to have a table that models tha relationships of many to many. There can be many project and many resources but once table combines them into resources for that specific project.
 
 ## Minimum Viable Product
 
@@ -144,5 +152,15 @@ Add support for the concept of `contexts`. A context is something like _at home_
 A `context` can be applied to more than one `task`. An task can be tied to more than one context, like in the example above.
 
 When retrieving an `task` by _id_, add a property that lists all the `contexts` related to that task.
+
+
+SELECT tasks.description, tasks.notes, contexts.context
+FROM task_contexts
+JOIN contexts 
+ON task_contexts.contextID = contexts.id
+JOIN tasks
+ON task_contexts.taskID = tasks.id
+WHERE task.id = id
+
 
 _Good luck and have fun!_
