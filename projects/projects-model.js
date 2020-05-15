@@ -26,25 +26,22 @@ function getProjectResources(projectID){
 }
 function getProjectByID(projectID){
     return new Promise((resolve, reject)=>{
-        console.log("before promise")
         Promise.all([db("projects").where("id", projectID).first(), 
                         Tasks.getTasks().select("id", "description", "notes", "completed").where("tasks.projectID", projectID), 
                         getProjectResources(projectID)])
         .then(values=>{
-            console.log("IN THEN")
             if(values){
-                console.log("IN IF")
                 resolve({
                     id:values[0].id, 
                     name:values[0].projectName, 
                     description: values[0].description,
-                    completed: !!parseInt(values[0].completed),  
+                    completed: !!values[0].completed,  
                     tasks: values[1].map(task=>{
                         return({
                             id: task.id,
                             description: task.description,
                             notes: task.notes,
-                            completed: !!parseInt(task.completed)
+                            completed: !!task.completed
                         })
                     }),
                     resources: values[2]
