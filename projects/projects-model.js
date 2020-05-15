@@ -38,8 +38,15 @@ function getProjectByID(projectID){
                     id:values[0].id, 
                     name:values[0].projectName, 
                     description: values[0].description,
-                    completed: values[0].completed,  
-                    tasks: values[1],
+                    completed: !!parseInt(values[0].completed),  
+                    tasks: values[1].map(task=>{
+                        return({
+                            id: task.id,
+                            description: task.description,
+                            notes: task.notes,
+                            completed: !!parseInt(task.completed)
+                        })
+                    }),
                     resources: values[2]
                  })
             }else{
