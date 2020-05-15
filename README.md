@@ -44,7 +44,7 @@ A relational databse is where the data is stored, SQL is Structured Query Langua
 
 - [ ] Why do tables need a `primary key`?
 
-oO each cell can be referenced by a uniqe identifies. It's an id that allows for data retrieval
+So each cell can be referenced by a unique identifiers. It's an id that allows for data retrieval
 
 - [ ] What is the name given to a table column that references the primary key on another table.
 
