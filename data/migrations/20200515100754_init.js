@@ -5,7 +5,7 @@ exports.up = function(knex) {
         projects.increments();
         projects.string("projectName").notNullable();
         projects.string("description");
-        projects.boolean("completed").defaultTo(false);
+        projects.boolean("completed").defaultTo(0);
     })
     .createTable("tasks", tasks=>{
         tasks.increments();
@@ -17,7 +17,8 @@ exports.up = function(knex) {
             .onUpdate("CASCADE")
             .onDelete("RESTRICT");
         tasks.string("description").notNullable();
-        tasks.boolean("completed").defaultTo(false);
+        tasks.string("notes");
+        tasks.boolean("completed").defaultTo(0);
     })
     .createTable("resources", resources=>{
         resources.increments();
