@@ -1,23 +1,12 @@
 const db = require("../data/db-config.js");
+const Tasks = require('../tasks/tasks-model.js');
 
 module.exports={
-    addResource,
-    getResources,
     addProject,
     getProjects,
-    addTask,
-    getTasks,
     getProjectByID,
     getProjectResources
 
-}
-
-function addResource(resource){
-    return db("resources").insert(resource)
-}
-
-function getResources(){
-    return db("resources")
 }
 
 function addProject(project){
@@ -28,25 +17,18 @@ function getProjects(){
     return db("projects")
 }
 
-function addTask(task){
-    return db("tasks").insert(task)
-}
-
-function getTasks(){
-    return db("tasks")
-}
 function getProjectResources(projectID){
     return db("project_resources")
     .join("projects", "project_resources.projectID", "=", "projects.id" )
     .join("resources", "project_resources.resourceID", "=", "resources.id")
-    .select("project_resources.id", "resources.resourceName", "resources.description" )
+    .select("project_resources.id", "resources.resourceName as name", "resources.description" )
     .where("projects.id", projectID)
 }
 function getProjectByID(projectID){
     return new Promise((resolve, reject)=>{
         console.log("before promise")
         Promise.all([db("projects").where("id", projectID).first(), 
-                        getTasks().select("id", "description", "notes", "completed").where("tasks.projectID", projectID), 
+                        Tasks.getTasks().select("id", "description", "notes", "completed").where("tasks.projectID", projectID), 
                         getProjectResources(projectID)])
         .then(values=>{
             console.log("IN THEN")
